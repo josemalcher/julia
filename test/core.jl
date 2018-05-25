@@ -6127,3 +6127,14 @@ end
 foo27204(x) = f27204(x)()
 @test foo27204(true) == 1
 @test foo27204(false) == 2
+
+# Issue 27240
+@inline function foo27240()
+    if rand(Bool)
+        return foo_nonexistant_27240
+    else
+        return bar_nonexistant_27240
+    end
+end
+bar27240() = foo27240()
+@test_throws UndefVarError bar27240()
