@@ -228,10 +228,10 @@ The mean `mean` over the region may be provided.
 var(A::AbstractArray; corrected::Bool=true, mean=nothing, dims=:) = _var(A, corrected, mean, dims)
 
 _var(A::AbstractArray, corrected::Bool, mean, dims) =
-    varm(A, coalesce(mean, Base.mean(A, dims=dims)); corrected=corrected, dims=dims)
+    varm(A, something(mean, Base.mean(A, dims=dims)); corrected=corrected, dims=dims)
 
 _var(A::AbstractArray, corrected::Bool, mean, ::Colon) =
-    real(varm(A, coalesce(mean, Base.mean(A)); corrected=corrected))
+    real(varm(A, something(mean, Base.mean(A)); corrected=corrected))
 
 varm(iterable, m; corrected::Bool=true) = _var(iterable, corrected, m)
 
